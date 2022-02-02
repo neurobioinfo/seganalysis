@@ -1,1 +1,1 @@
-print("You are using gnombox")
+print("You are using segregation analysis")
