@@ -5,12 +5,12 @@ setuptools.setup(
     name='seganalysis',
     url='https://github.com/The-Neuro-Bioinformatics-Core/seganalysis',
     author='Neuro Bioinformatics Core',
-    maintainer='Saeid Amiri'
-    maintainer_email='saeid.amiri@mcgill.ca',
+    maintainer='Saeid Amiri',
+    author_email='saeid.amiri@mcgill.ca',
     # Needed to actually package something
     packages=setuptools.find_packages(),
     # Needed for dependencies
-    install_requires=['os', 'numpy', 'sys', 'pandas', 'itertools', 'statistics'],
+    install_requires=['numpy','pandas'],
     # *strongly* suggested for sharing
     version='0.02',
     license='MIT',

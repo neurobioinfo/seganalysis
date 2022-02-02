@@ -1,0 +1,12 @@
+LICENSE
+README.rst
+hello.py
+setup.py
+seganalysis/__init__.py
+seganalysis/clean.py
+seganalysis/seg.py
+seganalysis.egg-info/PKG-INFO
+seganalysis.egg-info/SOURCES.txt
+seganalysis.egg-info/dependency_links.txt
+seganalysis.egg-info/requires.txt
+seganalysis.egg-info/top_level.txt
