@@ -14,7 +14,7 @@ setuptools.setup(
     # *strongly* suggested for sharing
     version='0.02',
     license='MIT',
-    description=' A package for Genome computation Data',
+    description=' A package for Segregation Analysis',
     # We will also need a readme eventually (there will be a warning)
     long_description=open('README.rst').read(),
     # if there are any scripts
