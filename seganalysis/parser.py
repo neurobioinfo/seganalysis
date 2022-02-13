@@ -32,7 +32,10 @@ def sub_seg(outfolder, header_need):
     final2=final.iloc[:,list2]
     for i in list(np.where(final2.dtypes=='object')[0]):
         if i==0: continue 
-        final2.iloc[:,i] = final2.iloc[:,i].apply(eval)
+        try: 
+            final2.iloc[:,i] = final2.iloc[:,i].apply(eval)
+        except (SyntaxError, NameError, TypeError, ZeroDivisionError):    
+            pass
         final2.iloc[:,i]=run_unique(final2.iloc[:,i])
     final2_name=f'{outfolder}/finalseg_modified.csv'        
     final2.to_csv(final2_name,index=False)
