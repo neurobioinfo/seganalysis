@@ -1,0 +1,1 @@
+locus	alleles	IMPACT	DISTANCE	SYMBOL	Gene	fam_ncl_naf	fam_vrt_naf	fam_homv_naf
