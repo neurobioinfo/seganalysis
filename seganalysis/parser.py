@@ -1,18 +1,24 @@
 import os 
-import sys
+# import sys
 import pandas as pd 
 import numpy as np
 from statistics import mode
 import itertools 
 
-def clean_seg(folder, header_need):
-    header_fin_name=f'{folder}header.txt'    
-    header_fin=pd.read_csv(header_fin_name, sep='\t',index_col=False,header=None)
-    header_need_name=f'{folder}{header_need}'            
+def sub_seg(outfolder, header_need):
+    """
+    outfolder: the folder that you want to save your output 
+    header_need: the header that you want. 
+    """
+    # header_fin_name=f'{outfolder}/header.txt'    
+    # header_fin=pd.read_csv(header_fin_name, sep='\t',index_col=False,header=None)
+    header_need_name=f'{header_need}'            
     header_need=pd.read_csv(header_need_name, sep='\t',index_col=False,header=None)
-    final_name=f'{folder}final.csv'        
+    final_name=f'{outfolder}/finalseg.csv'        
     final=pd.read_csv(final_name, sep='\t',index_col=False)
-    list2=[header_fin.iloc[0,:].tolist().index(i) for i in header_need.iloc[0,:].tolist()]
+    header_fin=list(final.columns)   
+    list2=[header_fin.index(i) for i in header_need.iloc[0,:].tolist()]
+    list2=list(set(list2))
     def uniq_unsort(x):
         indexes = np.unique(x, return_index=True)[1]
         return ([x[index] for index in sorted(indexes)])
@@ -28,25 +34,21 @@ def clean_seg(folder, header_need):
         if i==0: continue 
         final2.iloc[:,i] = final2.iloc[:,i].apply(eval)
         final2.iloc[:,i]=run_unique(final2.iloc[:,i])
-    final2_name=f'{folder}final_modified.csv'        
+    final2_name=f'{outfolder}/finalseg_modified.csv'        
     final2.to_csv(final2_name,index=False)
-    cmd_prune=f'cd {folder}; sed -i final_modified.csv -e "s/,|/,/g" -e "s/|,/,/g"'
+    cmd_prune=f'cd {outfolder}; sed -i finalseg_modified.csv -e "s/,|/,/g" -e "s/|,/,/g"'
     os.system(cmd_prune)
 
 
-
-
-
-
 # the following function calculate the mean and mode 
-def clean_seg_calculate_mean_mode(folder, header_need, header_to_modify):
-    header_fin_name=f'{folder}header.txt'    
+def clean_seg_calculate_mean_mode(outfolder, header_need, header_to_modify):
+    header_fin_name=f'{outfolder}/header.txt'    
     header_fin=pd.read_csv(header_fin_name, sep='\t',index_col=False,header=None)
-    header_need_name=f'{folder}{header_need}'            
+    header_need_name=f'{outfolder}/{header_need}'            
     header_need=pd.read_csv(header_need_name, sep='\t',index_col=False,header=None)
-    header_abs_name=f'{folder}{header_to_modify}'    
+    header_abs_name=f'{outfolder}/{header_to_modify}'    
     header_abs=pd.read_csv(header_abs_name, sep='\t',index_col=False,header=None)
-    final_name=f'{folder}final.csv'        
+    final_name=f'{outfolder}/finalseg.csv'        
     final=pd.read_csv(final_name, sep='\t',index_col=False)
     def floatB(aa):
         try:
@@ -86,7 +88,7 @@ def clean_seg_calculate_mean_mode(folder, header_need, header_to_modify):
     new_list = [x+header_fin.shape[1] for x in range(0,len(list1))]
     listt=list2+new_list
     final2=final.iloc[:,listt]
-    # final_name=f'{folder}final_m.csv'
+    # final_name=f'{outfolder}finalseg_m.csv'
     # final.iloc[:,listt].to_csv(final_name,index=False)
     for i in range(1,final2.shape[1]):
         # if i==0: next 
@@ -94,11 +96,12 @@ def clean_seg_calculate_mean_mode(folder, header_need, header_to_modify):
             final2.iloc[:,i] = final2.iloc[:,i].apply(eval)
         except :
             next
-    final2_name=f'{folder}final_modified.csv'        
+    final2_name=f'{outfolder}/finalseg_modified.csv'        
     final2.to_csv(final2_name,index=False)
-    cmd_prune=f'cd {folder}; sed -i final_modified.csv -e "s/\'//g"'
+    cmd_prune=f'cd {outfolder}; sed -i finalseg_modified.csv -e "s/\'//g"'
     os.system(cmd_prune)
 
 
 
-
+if __name__ == "__main__":
+    sub_seg()

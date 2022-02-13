@@ -12,7 +12,7 @@ setuptools.setup(
     # Needed for dependencies
     install_requires=['numpy','pandas'],
     # *strongly* suggested for sharing
-    version='0.02',
+    version='0.03',
     license='MIT',
     description=' A package for Segregation Analysis',
     # We will also need a readme eventually (there will be a warning)
