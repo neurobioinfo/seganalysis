@@ -1,4 +1,4 @@
-# seganalysis: A pipeline for  segregation analysis
+# seganalysis: A pipeline for segregation analysis
 ***
 
 ## Contents
