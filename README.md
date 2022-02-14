@@ -7,14 +7,14 @@
 - [Steps of running]
 
 ## Segregation Analysis
-Segregation is a process to explore the genetic variant. This pipeline counts the number of affecteds and nonaffecteds with variant, with homozygous variant, with no variant, and with no call. It gets those counts both in-family and globally. Also we also get the breakdown of not just variants, but also the breakdown of alleles in each. To achive the segregation, one needs a pedigree file, this should be a file including six columns: `familyid`, `individualid`, `parentalid`, `maternalid`, `sex`{1:male; 2:female, 0:unknown}, and `phenotype`={1: control (unaffected), 2: proband(affected), -9:missing}. And the genetic data must be in the `vcf` format. 
+Segregation is a process to explore the genetic variant in a sample of seguence data. This pipeline counts the number of affecteds and nonaffecteds with variant, with homozygous variant, with no variant, and with no call. It gets those counts both in-family and globally. Also we also get the breakdown of not just variants, but also the breakdown of alleles in each. To achive the segregation, one needs a pedigree file with six columns: `familyid`, `individualid`, `parentalid`, `maternalid`, `sex`{1:male; 2:female, 0:unknown}, and `phenotype`={1: control (unaffected), 2: proband(affected), -9:missing}. And the genetic data must be in the `vcf` format. 
 
 ## Hail
-This pipeline is developed on top on [Hail](https://hail.is/), this module is an open-source, scalable framework for exploring and analyzing genomic data. It is a module in Python on the top of Apache spark. The pipeline is tested on [Spark-3.1.2, Pre-build for Apache Hadoop3.2](https://spark.apache.org/downloads.html).  
+Seganalysis pipeline is developed on top of [Hail](https://hail.is/), Hail module is an open-source, scalable framework for exploring and analyzing genomic data. Hail is a module in Python on the top of Apache Spark, Seganalysis pipeline is tested on [Spark-3.1.2, Pre-build for Apache Hadoop3.2](https://spark.apache.org/downloads.html).
 
 ## Steps of running pipeline 
-The following steps show how to run the segregation.  
- ,
+The following steps show how to run the segregation pipeline.
+
 #### Step 1: Run Spark 
 First activate Spark on your system 
 ```
@@ -23,12 +23,13 @@ export SPARK_LOG_DIR=$HOME/temp
 module load java/11.0.2
 cd ${SPARK_HOME}; ./sbin/start-master.sh
 ```
+
 #### Step 2: Generate annotated file 
 Run [VEP](https://useast.ensembl.org/info/docs/tools/vep/script/vep_tutorial.html) to generate the annotated file.   
 
 #### Step 3:  Create table matrix
-In the first step initialize the hail and import your vcf file and write it as matrix table, the matrix table is a data structure to present the genetic data as matrix.  In the below, we import the vcf file and write it as `MatrixTable`, then read your matrix table.  
-For tutorial, we add a data to test the pipeline [https://github.com/The-Neuro-Bioinformatics-Core/seganalysis/test]. The pipline is explained using this dataset.  
+Next, initialize the hail and import your vcf file and write it as a matrix table, the matrix table is a data structure to present the genetic data as a matrix. In the below, we import the vcf file and write it as `MatrixTable`, then read your matrix table.
+For the tutorial, we add data to test the pipeline [https://github.com/The-Neuro-Bioinformatics-Core/seganalysis/test]. The pipeline is explained using this dataset. 
 
 The following code imports VCF as a MatrixTable: 
 ```
@@ -40,7 +41,7 @@ mt = hl.read_matrix_table('~/test/output/testseg.mt')
 ```
 
 #### Step 4: Run the module
-Run the following codes to generate the segregated file. 
+Run the following codes to generate the segregation. 
 ```
 from seganalysis import seg
 ped=pd.read_csv('~/test/data/testseg.ped'.ped',sep='\t')
