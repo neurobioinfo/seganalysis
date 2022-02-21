@@ -14,7 +14,9 @@ def segrun(mt, ped, outfolder,hl, *vcffile):
     """
     if vcffile is not None and len(vcffile) >= 1 :
         vcffile1=vcffile[0]
-        cmd0=f'grep "##INFO=<ID=CSQ"  {vcffile1}'
+        ext = vcffile1.split('.')[-1]
+        cmd_grep = 'zgrep' if ext == 'gz' or ext == 'bgz' else 'grep'
+        cmd0=f'{cmd_grep} "##INFO=<ID=CSQ"  {vcffile1}'
         csqlabel=os.popen(cmd0).read().split("Format: ")[1].split('">')[0].split('|')
         print("Run segregation on CSV with CSQ")   
         cmd_temp=f'cd {outfolder} ; mkdir -p temp'
@@ -104,7 +106,7 @@ def segrun_family_wise_CSQ_one(mt, ped, outfolder,hl,csqlabel):
     # hom_var: contains identical alternate alleles
     glb_aff_sam_mt = glb_aff_sam_mt.annotate_rows(glb_homv = hl.agg.sum(glb_aff_sam_mt.homv))
     # altaf: contains  ALT allele frequency   
-    glb_aff_sam_mt = glb_aff_sam_mt.annotate_rows(glb_altaf = (hl.agg.call_stats(glb_aff_sam_mt.GT, glb_aff_sam_mt.alleles).AF[0]))
+    glb_aff_sam_mt = glb_aff_sam_mt.annotate_rows(glb_altaf = 1-(hl.agg.call_stats(glb_aff_sam_mt.GT, glb_aff_sam_mt.alleles).AF[0]))
     listt2=[]
     # listt2.append('locus')
     # listt2.append('alleles')
